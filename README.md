@@ -1,80 +1,79 @@
-# Weathering_code
-# 🌤️ Arduino Weather Monitoring System
+# ☁️ Automatic Cloth Line System using Rain Sensor, Servo Motor & OLED (IoT Project)
 
-This project is a simple weather monitoring system using a **DHT11 temperature & humidity sensor** and a **128x64 OLED display (SSD1306)**. It displays live temperature and humidity readings on the OLED screen.
-
----
-
-## 🧰 Components
-
-- Arduino Uno or Nano
-- DHT11 Sensor
-- OLED Display (128x64 I2C - SSD1306)
-- Jumper Wires
-- Breadboard (optional)
+This Arduino-based IoT project automatically retracts or extends a cloth line based on weather conditions detected by a rain sensor. A servo motor physically moves the cloth line, and an OLED display shows real-time status messages like "Rain Detected" or "Weather Clear".
 
 ---
 
-## 🔌 Connections
+## 🔧 Features
 
-### DHT11:
-- VCC → 5V
-- GND → GND
-- DATA → D2
-
-### OLED:
-- VCC → 5V  
-- GND → GND  
-- SCL → A5 (UNO)  
-- SDA → A4 (UNO)  
+- 🌧️ **Rain Detection** using analog rain sensor
+- ⚙️ **Servo-controlled cloth line** (extends or retracts)
+- 🖥️ **OLED Display** (128x64 SSD1306) shows system status
+- 💡 Easily expandable with IoT platforms like Blynk, Firebase, or ThingSpeak
 
 ---
 
-## 📦 Libraries Required
+## 🧰 Hardware Requirements
 
-Install the following libraries via Arduino Library Manager:
-
-- **Adafruit SSD1306**
-- **Adafruit GFX**
-- **DHT sensor library**
-
----
-
-## 🧪 How It Works
-
-- Reads **temperature (°C)** and **humidity (%)** from the DHT11 sensor.
-- Displays the values on the OLED display.
-- Also prints the readings to the Serial Monitor for debugging.
+| Component          | Description                  |
+|-------------------|------------------------------|
+| Arduino Uno/Nano  | Microcontroller board        |
+| Rain Sensor       | YL-83 or FC-37 module        |
+| Servo Motor       | SG90 or MG90S                |
+| OLED Display      | 0.96" I2C SSD1306 (128x64)   |
+| Breadboard + Wires| For connections              |
+| External 5V Power | Optional (for servo power)   |
 
 ---
 
-## 🕹️ Usage
+## 🖇️ Circuit Connections
 
-1. Connect all components as shown above.
-2. Upload the code to your Arduino board using the Arduino IDE.
-3. Open the Serial Monitor (9600 baud).
-4. View real-time data on the OLED screen.
+### 🟦 Rain Sensor (Analog Mode)
+| Rain Sensor Pin | Arduino Pin |
+|-----------------|-------------|
+| AO              | A0          |
+| VCC             | 5V          |
+| GND             | GND         |
 
----
+### 🔁 Servo Motor
+| Servo Pin  | Arduino Pin |
+|------------|-------------|
+| Signal     | D9          |
+| VCC        | 5V          |
+| GND        | GND         |
 
-## 📈 Sample Output
-
-Temperature: 27.4 °C
-Humidity: 60.2 %  
-
-
-OLED Display:
-
-Weather Monitor
-Temp: 27.4 C
-Humidity: 60.2 %
-
-
-## 🛠️ Future Scope
-
-- Upgrade to DHT22 for better accuracy
-- Add weather icons or graphics
-- Log data to SD card or send to cloud (e.g., Thingspeak)
+### 📺 OLED Display (I2C)
+| OLED Pin | Arduino Uno/Nano Pin |
+|----------|----------------------|
+| SDA      | A4                   |
+| SCL      | A5                   |
+| VCC      | 3.3V / 5V            |
+| GND      | GND                  |
 
 ---
 
+## 📜 Code Overview
+
+### Libraries Used
+Install via **Arduino Library Manager**:
+- `Adafruit GFX Library`
+- `Adafruit SSD1306`
+
+### Functional Flow
+1. Reads analog value from rain sensor.
+2. If **rain is detected**:
+   - OLED displays `Rain Detected`
+   - Servo moves to **retracted** position.
+3. If **weather is clear**:
+   - OLED displays `Weather Clear`
+   - Servo moves to **extended** position.
+4. OLED continuously updates the current system state.
+
+---
+
+## 🧪 Calibration Tip
+
+You can adjust the sensitivity by tweaking this line in the code:
+
+```cpp
+int rainThreshold = 400; // Adjust this value based on your sensor
